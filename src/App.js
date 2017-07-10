@@ -29,7 +29,6 @@ class Userlogin extends Component{
   };
 
   onSubmit=(e)=>{
-    e.preventDefault();
     const user = axios.post(api_login_url, {username: this.state.username , password: this.state.password, platform: "web"})
     .then((response) =>
     (this.setState({success:true}),
