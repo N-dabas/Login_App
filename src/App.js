@@ -29,15 +29,16 @@ class Userlogin extends Component{
   };
 
   onSubmit=(e)=>{
+    e.preventDefault();
     const user = axios.post(api_login_url, {username: this.state.username , password: this.state.password, platform: "web"})
     .then((response) =>
-    (this.setState({success:true}),
-    this.setState({user:response.data.results.user.first_name})
+    (this.setState({success:true ,user:response.data.results.user.first_name+" "+response.data.results.user.last_name})
 ))
     .catch(error =>
     {alert("Password Denied to "+this.state.username)
   });
 };
+
 
   render(){
     if(this.state.success===false){
