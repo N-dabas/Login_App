@@ -1,49 +1,47 @@
-import React, { Component } from 'react';
+import React, { Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
 
 const api_login_url = "https://api.edu.chat/v1/api/login/";
-
-const Welcome=React.createClass({
-  render:function(){
+class Welcome extends Component{
+  render(){
     return(
       <h1>Welcome to the page {this.props.username}</h1>
     )
   }
-});
+}
 
-const Userlogin=React.createClass({
-
-  getInitialState:function(){
-    return {
+class Userlogin extends Component{
+  state={
       username:"",
       password:"",
       success:false,
       user:"",
-    };
-  },
+  };
 
-  username:function(e){
+  username=(e)=>{
     this.setState({username:e.target.value});
-  },
+  };
 
-  password:function(e){
+  password=(e)=>{
     this.setState({password:e.target.value});
-  },
+  };
 
-  onSubmit:function(e){
+  onSubmit=(e)=>{
+    e.preventDefault();
     const user = axios.post(api_login_url, {username: this.state.username , password: this.state.password, platform: "web"})
     .then((response) =>
     (this.setState({success:true}),
-    this.setState({user:response.data.results.user.first_name})))
+    this.setState({user:response.data.results.user.first_name})
+))
     .catch(error =>
     {alert("Password Denied to "+this.state.username)
   });
-  },
+};
 
-  render:function(){
-    if(this.state.success==false){
+  render(){
+    if(this.state.success===false){
       return(
         <form onSubmit={this.onSubmit}>
           <br/>Username:<input name="username" placeholder="Username" value={this.state.username} onChange={this.username}/> <br/><br/>
@@ -57,9 +55,9 @@ const Userlogin=React.createClass({
       )
     }
   }
-})
+}
 
-class App extends Component {
+export default class App extends Component {
   render() {
     return (
       <div className="App">
@@ -68,9 +66,7 @@ class App extends Component {
           <h2>Welcome to React</h2>
         </div>
         <Userlogin/>
-
       </div>
     );
   }
 }
-export default App;
