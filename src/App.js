@@ -33,7 +33,6 @@ const Userlogin=React.createClass({
   },
 
   onSubmit:function(e){
-    e.preventDefault();
     const user = axios.post(api_login_url, {username: this.state.username , password: this.state.password, platform: "web"})
     .then((response) =>
     (this.setState({success:true}),
